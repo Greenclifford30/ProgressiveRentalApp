@@ -1,0 +1,10 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div *ngIf="afAuth.user | async as user; else showLogin">
+    <h1>Hello {{ user.displayName }}!</h1>
+    <button (click)="logout()">Logout</button>
+  </div>
+  <ng-template #showLogin>
+    <p>Please login.</p>
+    <button mat-button (click)="login()">Login with Google</button>
+<router-outlet></router-outlet>
+
