@@ -1,3 +1,7 @@
-<div *ngIf="user | async as user;">
-  {{userDetails.displayName}}
-</div>
+
+<mat-card *ngFor="let item of items | async">
+  <div *ngIf="user | async as user;">
+      {{userDetails.displayName}}
+  </div>
+  <p>Cool {{rent}}</p>
+</mat-card>

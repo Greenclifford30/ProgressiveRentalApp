@@ -15,6 +15,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
 import { AuthService } from './services/auth.service';
 import { RouterModule } from '@angular/router';
+import {AngularFireDatabaseModule} from 'angularfire2/database'
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { RouterModule } from '@angular/router';
     BrowserAnimationsModule,
     MaterialModule,
     AngularFireAuthModule,
+    AngularFireDatabaseModule,
     AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase')
   ],
   providers: [AuthService],
