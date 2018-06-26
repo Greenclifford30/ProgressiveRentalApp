@@ -1,0 +1,7 @@
+<div *ngIf="user | async as user; else showLogin">
+        <button mat-button (click)="logout()">Logout</button>
+    </div>
+      <ng-template #showLogin>
+        <button mat-button (click)="login()">Login with Google</button>
+</ng-template>
+
