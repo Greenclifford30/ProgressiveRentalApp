@@ -4,6 +4,20 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+<<<<<<< HEAD
+=======
+    {
+        "name": "Launch Chrome with ng serve",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost:4200",
+        "webRoot": "${workspaceRoot}",
+        "sourceMapPathOverrides": {
+            "webRoot": "${workspaceRoot}",
+            "webpack:/*": "${workspaceRoot}/*"
+        }
+    },
+>>>>>>> 59fa2bb16b80f96b80e4d55596a9644912268301
         {
             "type": "chrome",
             "request": "launch",
