@@ -1,7 +1,11 @@
 
-<mat-card *ngFor="let item of items | async">
-  <div *ngIf="user | async as user;">
-      {{userDetails.displayName}}
-  </div>
-  <p>Cool {{item | json}}</p>
+<mat-card *ngFor="let user of users | async">
+  <mat-card-header>
+    {{user.email}}
+  </mat-card-header>
+  <p>{{user.photoUrl}}</p>
+  <p>Cool {{user | json}}</p>
 </mat-card>
+<div *ngIf="user | async as user">
+  <app-properties></app-properties>
+</div>

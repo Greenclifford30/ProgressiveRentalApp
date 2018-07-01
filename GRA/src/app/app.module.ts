@@ -1,3 +1,4 @@
+import { AgmCoreModule } from '@agm/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -16,7 +17,9 @@ import { AngularFireModule } from 'angularfire2';
 import { AuthService } from './services/auth.service';
 import { RouterModule } from '@angular/router';
 import {AngularFireDatabaseModule} from 'angularfire2/database'
-import {AngularFirestoreModule} from 'angularfire2/firestore'
+import {AngularFirestoreModule} from 'angularfire2/firestore';
+import { AdminComponent } from './admin/admin.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 @NgModule({
@@ -27,7 +30,8 @@ import {AngularFirestoreModule} from 'angularfire2/firestore'
     PropertiesComponent,
     ToolbarComponent,
     DashboardComponent,
-    UsersComponent
+    UsersComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +42,11 @@ import {AngularFirestoreModule} from 'angularfire2/firestore'
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFirestoreModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyCk4HLyDF3GrU4xQswmOqyuOzLB2yxjmNQ"
+    }),
+    AngularFireModule.initializeApp(environment.firebase),
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

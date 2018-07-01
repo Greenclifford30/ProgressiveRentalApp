@@ -15,37 +15,18 @@ import { map } from 'rxjs/operators';
 })
 export class DashboardComponent implements OnInit {
 
-  user: Observable<firebase.User>;
-  userDetails: firebase.User = null;
-  itemsRef: AngularFirestoreCollection<any>;
-  items: Observable<any[]>;
+  users: Observable<any[]>;
 
   constructor(db: AngularFirestore, private afauth: AngularFireAuth, private router: Router, private authService: AuthService) 
-  { 
-    this.user = afauth.authState;
+  {
     //this.itemsRef = db.collection('/users');
-    this.items = db.collection('/users').valueChanges();
+    this.users = db.collection('/users').valueChanges();
 
-        // Use snapshotChanges().map() to store the key
-      
-    this.user.subscribe(
-      (user) => {
-        if (user) {
-          this.userDetails = user;
-          console.log(this.items);
-          //console.log(this.userDetails.displayName);
-          //console.log(this.user);
-        }
-        else {
-          this.userDetails = null;
-          console.log("Not Logged in")
-        }
-      }
-    );
+    // Use snapshotChanges().map() to store the key
   }
 
   ngOnInit() {
-    this.items.subscribe(test => console.log(test));
+    this.users.subscribe(test => console.log(test));
   }
 
   
