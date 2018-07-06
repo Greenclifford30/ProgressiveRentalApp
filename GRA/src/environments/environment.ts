@@ -11,7 +11,9 @@ export const environment = {
    projectId: "rental-application-exp",
    storageBucket: "rental-application-exp.appspot.com",
    messagingSenderId: "452748343109"
- }
+ },
+
+ googleMapsKey: 'AIzaSyBFWpD2rVnCTzzabzDXm76J7mKnIAv5H7c'
 };
 
 /*

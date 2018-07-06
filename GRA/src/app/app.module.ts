@@ -20,6 +20,7 @@ import {AngularFireDatabaseModule} from 'angularfire2/database'
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 import { AdminComponent } from './admin/admin.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ReactiveFormsModule } from '@angular/forms'
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     RouterModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     MaterialModule,
     AngularFireAuthModule,
     AngularFireDatabaseModule,

@@ -1,4 +1,33 @@
-<p>
-  admin works!
-</p>
-<app-dashboard></app-dashboard>
+<div *ngIf="lat && long">
+    <agm-map [latitude]="lat" [longitude]="lng">
+      <agm-marker [latitude]="lat" [longitude]="lng">
+        <agm-info-window>
+          
+        </agm-info-window>
+      </agm-marker>
+    </agm-map>
+</div>
+
+<div>    Value: {{myForm.value | json}}</div>
+  <form [formGroup]="myForm">
+    <div formArrayName="properties">
+      <div *ngFor="let property of propertyForms().controls; let i=index" [formGroupName]="i">
+        <mat-form-field>
+          <input matInput placeholder="address" formControlName="address">
+          <mat-error *ngIf="getAddress(i).errors.required && getAddress(i).touched">
+            Address Required
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="rate" formControlName="rate">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="tenant" formControlName="tenant">
+        </mat-form-field>
+
+        <button mat-raised-button color="warn" (click)="removeProperty(i)">Delete</button>
+      </div>
+    </div>
+    <button mat-button (click)="addProperty()">Add property</button>
+  </form>
+  <!--<app-dashboard></app-dashboard>-->
