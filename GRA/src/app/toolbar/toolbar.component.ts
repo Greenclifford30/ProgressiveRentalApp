@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { Observable } from 'rxjs';
 import { User } from './../user';
 import { Router } from '@angular/router';
@@ -11,19 +12,23 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 })
 export class ToolbarComponent implements OnInit {
 
-  user$: Observable<User>;
+  user: User;
 
-  constructor(private afauth: AngularFireAuthModule, private router: Router) { 
-    
+  constructor(private auth: AuthService, private router: Router) { 
+    this.auth.user$.subscribe(user => this.user = user);
   }
 
   ngOnInit() {
-    console.log("active");
+    
   }
 
   admin()
   {
-    console.log("routec");
     return this.router.navigate(['/admin']);
+  }
+
+  home()
+  {
+    return this.router.navigate(['']);
   }
 }

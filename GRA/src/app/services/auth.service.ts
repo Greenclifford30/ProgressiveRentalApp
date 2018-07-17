@@ -30,19 +30,6 @@ export class AuthService {
               return of(null);
             }
           }));
-
-      /*this.user.subscribe(
-        (user) => {
-          if (user) 
-          {
-            this.userDetails = user;
-            //console.log(this.user);
-          }
-          else{
-            this.userDetails = null;
-          }
-        }
-      );*/
   }
 
   isLoggedIn()

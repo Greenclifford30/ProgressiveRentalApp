@@ -1,10 +1,12 @@
 <mat-toolbar color="primary">
-    <button mat-button (click)="admin()">Admin</button>
-  <span class="fill-space">
-      <span >
-          Welcome
-      </span>
-  </span>
+        <span class="fill-space">
+            <span>
+                Welcome 
+            </span>
+        </span>
+    <button mat-button *ngIf="auth.canView(user)"(click)="home()">Home</button>
+    <button mat-button   *ngIf="auth.canEdit(user)" (click)="admin()">Admin</button>
+
     <div id="login">
       <app-login></app-login>
     </div>
