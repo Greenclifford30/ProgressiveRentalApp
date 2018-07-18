@@ -1,8 +1,11 @@
 import { Router } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms'
+import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms'
+import { AgmCoreModule, MapsAPILoader } from '@agm/core'
+import {} from 'googlemaps'
+
 
 @Component({
   selector: 'app-admin',
@@ -10,72 +13,47 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  lat: number;
-  lng: number;
 
-  myForm: FormGroup;
-  properties: FormGroup;
-  constructor(private fb: FormBuilder, private afauth: AngularFireAuth, private afs: AngularFirestore, private router: Router) { }
+  @ViewChild("search")
+  public searchElementRef: ElementRef;
+
+  autocomplete: google.maps.places.Autocomplete;
+  propertyForm: FormGroup;
+  tenantForm: FormGroup;
+
+  constructor(private afauth: AngularFireAuth, private afs: AngularFirestore, private router: Router, private fb: FormBuilder, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) { }
 
   ngOnInit() {
-    this.getUserLocation()
-
-    this.myForm = this.fb.group({
-      properties: this.fb.array([])
-    })
- 
-    //this.myForm.valueChanges.subscribe(console.log);
-  }
-
-  private getUserLocation()
-  {
     
-    if(navigator.geolocation){
-      navigator.geolocation.getCurrentPosition(
-        position => {
-        this.lat= position.coords.latitude;
-        this.lng = position.coords.longitude;
-        },
-        error => {
-          console.log(error.message);
-        }
-    )
-    }
-  }
-  propertyForms(){
-    return this.myForm.get('properties') as FormArray;
+    this.mapsAPILoader.load().then(() => {
+       this.autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {types: ["address"]});
+    });
+    
+    this.propertyForm = this.fb.group({
+        address: new FormControl(''),
+        rate: 0,
+        sqFootage: 0,
+        bedrooms: 0
+    });
+    
+
+    this.tenantForm = this.fb.group({
+      'firstName': '',
+      'lastName': '',
+      'dob': ''
+    });
+
+    //this.autocomplete.addListener("");
+    (<FormControl>this.propertyForm.controls['address']).valueChanges.subscribe(val => {
+      //console.log(this.propertyForm.controls['address'].value);
+      console.log(this.autocomplete);
+      //this.propertyForm.controls['address'].updateValueAndValidity({onlySelf: true});
+      //this.propertyForm.controls['address'].setValue(this.autocomplete.getPlace().name);
+    });
   }
 
-  addProperty()
+  addressChange()
   {
-    const property = this.fb.group(
-      {
-        address: ['', [
-          Validators.required,
-          Validators.nullValidator
-        ]],
-        rate: ['',[
-          Validators.min(0)
-        ]],
-        tenant: ['', [
-          Validators.maxLength(25)
-        ]]
-      })
-
-      this.propertyForms().push(property);
-      console.log(this.propertyForms().controls[0].get('address'));
+    console.log("event");
   }
-
-  getAddress(i)
-  {
-    return this.propertyForms().controls[i].get('address');
-  }
-
-  removeProperty(i)
-  {
-    this.propertyForms().removeAt(i);
-  }
-
-
-
 }

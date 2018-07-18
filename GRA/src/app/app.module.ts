@@ -20,7 +20,7 @@ import {AngularFireDatabaseModule} from 'angularfire2/database'
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 import { AdminComponent } from './admin/admin.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -36,16 +36,17 @@ import { ReactiveFormsModule } from '@angular/forms'
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     RouterModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
     MaterialModule,
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFirestoreModule,
     AgmCoreModule.forRoot({
-      apiKey: "AIzaSyCk4HLyDF3GrU4xQswmOqyuOzLB2yxjmNQ"
+      apiKey: environment.googleMapsKey,
+      libraries: ['places']
     }),
     AngularFireModule.initializeApp(environment.firebase),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })

@@ -12,8 +12,7 @@ export const environment = {
    storageBucket: "rental-application-exp.appspot.com",
    messagingSenderId: "452748343109"
  },
-
- googleMapsKey: 'AIzaSyBFWpD2rVnCTzzabzDXm76J7mKnIAv5H7c'
+ googleMapsKey: 'AIzaSyADyb3lgja8iBz1ompaVUx4irthC667V-Y'
 };
 
 /*

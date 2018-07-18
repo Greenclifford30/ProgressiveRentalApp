@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatInputModule, MatSelectModule, MatChipsModule, MatCardModule, MatIconModule, MatToolbarModule, MatButtonModule, MatCheckboxModule, MatExpansionModule } from '@angular/material';
+import {MatAutocompleteModule, MatInputModule, MatFormFieldModule, MatCardModule, MatIconModule, MatToolbarModule, MatButtonModule, MatCheckboxModule, MatSidenavModule, MatSnackBarModule, MatChipsModule, MatDialogModule, MatButtonToggleModule, MatStepperModule} from '@angular/material';
 @NgModule({
   imports: [
-    CommonModule, MatInputModule, MatSelectModule, MatChipsModule, MatCardModule, MatIconModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatExpansionModule
+    CommonModule, MatAutocompleteModule, MatInputModule, MatFormFieldModule, MatCardModule, MatIconModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatSnackBarModule, MatChipsModule, MatDialogModule, MatButtonToggleModule, MatStepperModule
   ],
-  exports: [MatInputModule, MatSelectModule, MatChipsModule, MatCardModule, MatIconModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatExpansionModule],
+  exports: [MatInputModule, MatAutocompleteModule, MatFormFieldModule, MatCardModule, MatIconModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatSnackBarModule, MatChipsModule, MatDialogModule, MatButtonToggleModule, MatStepperModule],
   declarations: []
 })
 export class MaterialModule { }
