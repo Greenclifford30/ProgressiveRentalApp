@@ -4,6 +4,7 @@
     <mat-card-subtitle>Status of Tenants</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
+    {{address}}
     <p>
       {{propertyForm.value | json}}
     </p>
@@ -59,7 +60,7 @@
         <button mat-button (click)="stepper.reset();">Finish</button>
       </div>
     </mat-step>
-    
+
   </mat-horizontal-stepper>
 </div>
 

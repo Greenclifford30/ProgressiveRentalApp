@@ -1,16 +1,15 @@
 import { Roles } from './user';
 import { AuthService } from './services/auth.service';
-export interface Roles
-{
+
+export interface Roles {
     admin?: boolean;
     reader: boolean;
     landlord?: boolean;
     tenant?: boolean;
 }
 export class User {
-
-    uid: string
+  uid: string;
     email: string;
     photoUrl: string;
-    roles: Roles
+  roles: Roles;
 }

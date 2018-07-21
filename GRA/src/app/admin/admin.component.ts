@@ -2,9 +2,11 @@ import { Router } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms'
-import { AgmCoreModule, MapsAPILoader } from '@agm/core'
-import {} from 'googlemaps'
+import {FormBuilder, FormGroup, FormControl} from '@angular/forms';
+import {AgmCoreModule, MapsAPILoader} from '@agm/core';
+import {} from '@types/googlemaps';
+import {observable, Observable} from 'rxjs';
+import {s, st} from '@angular/core/src/render3';
 
 
 @Component({
@@ -14,28 +16,48 @@ import {} from 'googlemaps'
 })
 export class AdminComponent implements OnInit {
 
-  @ViewChild("search")
+  @ViewChild('search')
   public searchElementRef: ElementRef;
 
   autocomplete: google.maps.places.Autocomplete;
+  searchResult: google.maps.places.PlaceResult;
+  address: string;
   propertyForm: FormGroup;
   tenantForm: FormGroup;
 
-  constructor(private afauth: AngularFireAuth, private afs: AngularFirestore, private router: Router, private fb: FormBuilder, private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) { }
+  constructor(private afauth: AngularFireAuth, private afs: AngularFirestore,
+              private router: Router, private fb: FormBuilder,
+              private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {
+  }
 
   ngOnInit() {
-    
+
     this.mapsAPILoader.load().then(() => {
-       this.autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {types: ["address"]});
+      this.autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {types: ['address']});
+      this.autocomplete.addListener('place_changed', () => {
+        this.ngZone.run(() => {
+          const place: google.maps.places.PlaceResult = this.autocomplete.getPlace();
+          const address: string = place.formatted_address;
+          this.searchResult = place;
+          this.address = address;
+          console.log(place);
+
+          this.propertyForm.controls['address'].setValue(place.name);
+          if (!(place.geometry === undefined || place.geometry === null)) {
+          } else {
+            return;
+          }
+        });
+      });
     });
-    
+
     this.propertyForm = this.fb.group({
         address: new FormControl(''),
         rate: 0,
         sqFootage: 0,
         bedrooms: 0
     });
-    
+
 
     this.tenantForm = this.fb.group({
       'firstName': '',
@@ -43,17 +65,9 @@ export class AdminComponent implements OnInit {
       'dob': ''
     });
 
-    //this.autocomplete.addListener("");
-    (<FormControl>this.propertyForm.controls['address']).valueChanges.subscribe(val => {
-      //console.log(this.propertyForm.controls['address'].value);
-      console.log(this.autocomplete);
-      //this.propertyForm.controls['address'].updateValueAndValidity({onlySelf: true});
-      //this.propertyForm.controls['address'].setValue(this.autocomplete.getPlace().name);
-    });
-  }
 
-  addressChange()
-  {
-    console.log("event");
+    (<FormControl>this.propertyForm.controls['address']).valueChanges.subscribe(val => {
+
+    });
   }
 }

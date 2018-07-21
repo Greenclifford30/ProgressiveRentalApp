@@ -1,7 +1,7 @@
 import { switchMap } from 'rxjs/operators';
 import { User, Roles } from './../user';
 import { Injectable } from '@angular/core';
-import { Router } from "@angular/router";
+import {Router} from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
@@ -16,24 +16,19 @@ export class AuthService {
   user$: Observable<User>;
   private userDetails: firebase.User = null;
 
-  constructor(private afauth: AngularFireAuth, private afs: AngularFirestore, private router: Router) { 
+  constructor(private afauth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
       this.user$ = this.afauth.authState.pipe(
-        switchMap(user => 
-          {
-            if(user)
-            {
+        switchMap(user => {
+          if (user) {
               console.log(user);
               return this.afs.doc<User>('users/${user.uid}').valueChanges();
-            }
-            else 
-            {
+          } else {
               return of(null);
             }
           }));
   }
 
-  isLoggedIn()
-  {
+  isLoggedIn() {
     if (this.userDetails == null ) {
       return false;
     } else {
@@ -42,53 +37,46 @@ export class AuthService {
   }
 
   logout() {
-    console.log("logout attempt");
+    console.log('logout attempt');
     this.afauth.auth.signOut()
     .then((res) => this.router.navigate(['/']));
   }
-  
+
   signInWithGoogle() {
     return this.afauth.auth.signInWithPopup(
       new firebase.auth.GoogleAuthProvider()
-    ).then((credential) =>{
+    ).then((credential) => {
       this.updateUser(credential.user);
-    })
+    });
   }
 
-  updateUser(user)
-  {
+  updateUser(user) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc<User>('users/${user.uid}');
-    const data: User = 
-      {
+    const data: User = {
         uid: user.uid,
         email: user.email,
         photoUrl: user.photoURL,
         roles: {reader: true}
-      }
+    };
       return userRef.set(data, {merge: true});
   }
 
-  canEdit(user): boolean
-  {
-    const allowed = ['admin', 'landlord']
+  canEdit(user): boolean {
+    const allowed = ['admin', 'landlord'];
     return this.checkAuth(user, allowed);
   }
 
-  canView(user): boolean
-  {
-    const allowed = ['admin', 'landlord', 'tenant']
+  canView(user): boolean {
+    const allowed = ['admin', 'landlord', 'tenant'];
     return this.checkAuth(user, allowed);
   }
-  
-  private checkAuth(user: User, allowedRoles: string[]): boolean
-  {
-    if(!user) return false
-    else
-    {
-      for(const role of allowedRoles)
-      {
-        if(user.roles[role])
-        {
+
+  private checkAuth(user: User, allowedRoles: string[]): boolean {
+    if (!user) {
+      return false;
+    } else {
+      for (const role of allowedRoles) {
+        if (user.roles[role]) {
           return true;
         }
       }
